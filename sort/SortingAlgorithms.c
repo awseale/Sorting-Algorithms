@@ -9,7 +9,7 @@
  */
 
 #include "header.h"
-
+   
   //Purpose: sorts an array with the Bubble Sort algorithm
   //compares two elements at a time, and if they are out of order, swap them
   //continue this until the array is sorted
@@ -60,12 +60,76 @@ void insertionSort(int* array,int arrayLength){
    }
 }
 
+  //prototype for helper methods used in Merge Sort
+void merge(int *array,int low, int mid, int high);
+void sort(int* array, int low, int high);
+
   //Purpose: sorts an array using the Merge Sort algorithm
   //breaks the arrays down into smaller parts, and then reorganizes them
   //into larger sorted arrays
   //utilizes "Divide-and-conquer" methodology
 void mergeSort(int* array,int arrayLength){
+     //call to recursive function sort to break the array into smaller 
+     //pieces for sorting later on
+   sort(array,0,arrayLength);
+}
+   //Purpose: breaks the arrays into smaller parts designed to be merged
+   //back together with the merge function
+void sort(int* array, int low, int high){
+     //if the array is larger than size one (low == high)
+     //perform the Merge Sort algorithm upon it
+   if(high > low){
+      int mid = (low + high)/2;
+        //split the array into smaller halves and perform Merge Sort on
+        //each half
+      sort(array,low,mid);
+      sort(array,mid+1,high);
+      merge(array,low,mid,high);
+   }
+}
+  //Purpose: Takes the elements in an array, places them into two smaller
+  //arrays, and uses the smaller arrays to hold the elements to be placed
+  //back into the bigger array in order
+void merge(int* array, int low, int mid, int high){
+   int i,j,k;
+   int leftHalf = mid - low - 1;
+   int rightHalf = high - mid;
 
+   int *lSubArray = malloc(sizeof(int) * leftHalf);
+   int *rSubArray = malloc(sizeof(int) * rightHalf);
+
+   for(i=0;i<leftHalf;i++)
+      *(lSubArray + i) = *(array + low + i);
+   for(j=0;j<rightHalf;j++)
+      *(rSubArray + j) = *(array + mid + j);
+
+   i = j = 0; 
+   k = low;
+
+   while(i < leftHalf && j < rightHalf){
+      if(*(lSubArray + i) <= *(rSubArray + i)){
+         *(array + k) = *(lSubArray + i);
+         i++;
+      }
+      else{
+         *(array + k) = *(rSubArray + j);
+         j++;
+      }
+
+      k++;
+   }
+
+   while(i < leftHalf){
+      *(array + k) = *(lSubArray + i);
+      i++;
+      k++;
+   }
+
+   while(j < rightHalf){
+      *(array + k) = *(rSubArray + j);
+      j++;
+      k++;
+   }
 }
 
   //Purpose: sorts an integer array using the Quick Sort algorithm
