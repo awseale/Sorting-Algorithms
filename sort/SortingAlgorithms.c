@@ -71,7 +71,7 @@ void sort(int* array, int low, int high);
 void mergeSort(int* array,int arrayLength){
      //call to recursive function sort to break the array into smaller 
      //pieces for sorting later on
-   sort(array,0,arrayLength);
+   sort(array,0,arrayLength-1);
 }
    //Purpose: breaks the arrays into smaller parts designed to be merged
    //back together with the merge function
@@ -82,7 +82,7 @@ void sort(int* array, int low, int high){
       int mid = (low + high)/2;
         //split the array into smaller halves and perform Merge Sort on
         //each half
-     sort(array,low,mid);
+      sort(array,low,mid);
       sort(array,mid+1,high);
       merge(array,low,mid,high);
    }
@@ -92,7 +92,7 @@ void sort(int* array, int low, int high){
   //back into the bigger array in order
 void merge(int* array, int low, int mid, int high){
    int i,j,k;
-   int leftHalf = mid - low - 1;
+   int leftHalf = mid - low + 1;
    int rightHalf = high - mid;
 
    int *lSubArray = malloc(sizeof(int) * leftHalf);
@@ -101,13 +101,13 @@ void merge(int* array, int low, int mid, int high){
    for(i=0;i<leftHalf;i++)
       *(lSubArray + i) = *(array + low + i);
    for(j=0;j<rightHalf;j++)
-      *(rSubArray + j) = *(array + mid + j);
+      *(rSubArray + j) = *(array + mid + 1 + j);
 
    i = j = 0; 
    k = low;
 
    while(i < leftHalf && j < rightHalf){
-      if(*(lSubArray + i) <= *(rSubArray + i)){
+      if(*(lSubArray + i) <= *(rSubArray + j)){
          *(array + k) = *(lSubArray + i);
          i++;
       }
