@@ -9,7 +9,7 @@
  */
 
 #include "header.h"
-   
+
   //Purpose: sorts an array with the Bubble Sort algorithm
   //compares two elements at a time, and if they are out of order, swap them
   //continue this until the array is sorted
@@ -29,9 +29,9 @@ void bubbleSort(int* array,int arrayLength){
          if(*(array+i) > *(array+i+1)){
             sorted = 1;
             int temp = *(array+i);
-            *(array+i) = *(array+i+1);
-            *(array+i+1) = temp;
-         } 
+            *(array + i) = *(array + i + 1);
+            *(array + i + 1) = temp;
+         }
       }
    }
 }
@@ -48,15 +48,15 @@ void insertionSort(int* array,int arrayLength){
    for(i=1;i<arrayLength;i++){
         //an element is out of place, must insert it into its correct place
         //in the array
-      if(*(array+i) > *(array+i-1)){
-         int temp = *(array+i);
-         j = i;
-         while(temp > *(array+j)){
-            *(array+j) = *(array+j-1);
-            j--;   
-         }
-         *(array+j) = temp;
-      } 
+      int temp = *(array+i);
+      j = i;
+
+      while(j > 0 && temp < *(array+j-1)){
+         *(array+j) = *(array+j-1);
+         j--;
+      }
+
+      *(array+j) = temp;
    }
 }
 
@@ -82,7 +82,7 @@ void sort(int* array, int low, int high){
       int mid = (low + high)/2;
         //split the array into smaller halves and perform Merge Sort on
         //each half
-      sort(array,low,mid);
+     sort(array,low,mid);
       sort(array,mid+1,high);
       merge(array,low,mid,high);
    }
@@ -130,6 +130,8 @@ void merge(int* array, int low, int mid, int high){
       j++;
       k++;
    }
+   free(lSubArray);
+   free(rSubArray);
 }
 
   //Purpose: sorts an integer array using the Quick Sort algorithm
