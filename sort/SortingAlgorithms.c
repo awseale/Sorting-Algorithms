@@ -144,7 +144,7 @@ int partitionify(int* array, int low, int high);
   //action
   //utilizes "Divide-and-conquer" methodology
 void quickSort(int* array,int arrayLength){
-   quicklySort(array,0,arrayLength);
+   quicklySort(array,0,arrayLength-1);
 }
 
   //Purpose: Performs the Quick Sort algorithm upon a given array
@@ -177,4 +177,4 @@ int partitionify(int* array, int low,int high){
    *(array + high) = *(array + i + 1);
    *(array + i + 1) = temp;
    return i+1;
-} 
+}
