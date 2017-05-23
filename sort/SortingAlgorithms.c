@@ -134,6 +134,9 @@ void merge(int* array, int low, int mid, int high){
    free(rSubArray);
 }
 
+  //Prototypes for quickSort helper functions
+void quicklySort(int* array, int low, int high);
+int partitionify(int* array, int low, int high);
   //Purpose: sorts an integer array using the Quick Sort algorithm
   //picks a pivot in the array and sorts all elements in the array into
   //greater than or less than said pivot
@@ -141,5 +144,37 @@ void merge(int* array, int low, int mid, int high){
   //action
   //utilizes "Divide-and-conquer" methodology
 void quickSort(int* array,int arrayLength){
-
+   quicklySort(array,0,arrayLength);
 }
+
+  //Purpose: Performs the Quick Sort algorithm upon a given array
+void quicklySort(int* array,int low,int high){
+   int partition;
+   if(high > low){
+      partition = partitionify(array,low,high);
+      quicklySort(array,low,partition-1);
+      quicklySort(array,partition+1,high);     
+   }
+}
+  //Purpose: picks a pivot, and organizes all elements less than the pivot
+  //to go to the left of the pivot, and all greater to go right of the pivot
+int partitionify(int* array, int low,int high){
+     //the element picked to sort around
+     //truly, the pivot doesn't matter as the array is randomly sorted
+     //and therefore we wouldn't know the location of the perfect pivot
+   int pivot = *(array + high);
+   int i = low - 1;
+   int j,temp;
+   for(j=low;j<=high-1;j++){
+      if(*(array + j) <= pivot){
+         i++;
+         temp = *(array + j);
+         *(array + j) = *(array + i);
+         *(array + i) = temp;
+      }
+   } 
+   temp = *(array + high);
+   *(array + high) = *(array + i + 1);
+   *(array + i + 1) = temp;
+   return i+1;
+} 
